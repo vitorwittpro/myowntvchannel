@@ -1,6 +1,3 @@
-# myowntvchannel
-build a end-to-end tv channel application 
-
 # **Criando um Canal de TV em um Site**
 
 A ideia é construir um sistema onde um vídeo fique rodando continuamente, simulando um canal de TV, e toda vez que o site for acessado, o vídeo esteja sendo reproduzido a partir do ponto atual. Abaixo está uma abordagem usando **Next.js** no frontend, **NestJS** no backend, além de opções para banco de dados e tecnologias de DevOps.
