@@ -1,150 +1,158 @@
-## **Fase 1: Projeto Básico - MVP**
-### Objetivo:
-Criar um sistema simples que reproduza um vídeo continuamente no site.
+# Fases de Entrega - Criando um Canal de TV em um Site
 
-### Funcionalidades:
-1. **Frontend**:
-   - Página com player de vídeo usando **React Player**.
-   - Configurar para carregar o vídeo de uma URL fixa.
-
-2. **Backend**:
-   - Endpoint básico em **NestJS** que retorna a URL do vídeo atual.
-
-3. **Banco de Dados**:
-   - Nenhum banco de dados neste estágio. A URL do vídeo é fixa no código do backend.
-
-4. **DevOps**:
-   - Deploy manual:
-     - Hospede o frontend em **Vercel**.
-     - Backend em **Heroku** ou **Render**.
-
-### Tecnologias:
-- **Frontend**: Next.js com React Player.
-- **Backend**: NestJS com um endpoint básico.
-- **Hospedagem**: Vercel (frontend) + Heroku (backend).
+Este documento descreve a divisão do projeto em fases de entrega, desde o projeto básico até a finalização com funcionalidades e ferramentas avançadas.
 
 ---
 
-## **Fase 2: Adição de Playlist**
+## Fase 1: Projeto Básico - Configuração e Funcionalidade Inicial
+
 ### Objetivo:
-Permitir a reprodução contínua de uma lista de vídeos.
+Estabelecer a base do projeto com a configuração inicial das tecnologias (Next.js no frontend, NestJS no backend) e uma funcionalidade mínima para garantir que o fluxo básico do projeto funcione.
 
-### Melhorias:
-1. **Frontend**:
-   - Modificar o player para buscar a lista de vídeos via API.
-   - Implementar lógica para trocar de vídeo automaticamente ao término.
+### Tarefas:
+1. **Configuração Inicial do Frontend (Next.js)**:
+   - Inicializar o projeto Next.js.
+   - Criar uma página simples de teste, sem integração com backend.
+   - Incluir dependências do **React Player** ou **HLS.js** para permitir a futura reprodução de vídeos.
+   
+2. **Configuração Inicial do Backend (NestJS)**:
+   - Criar o projeto NestJS.
+   - Configurar a API REST simples para fornecer dados do vídeo atual (somente um endpoint inicial para testar a comunicação).
+   - Testar a integração entre frontend e backend.
 
-2. **Backend**:
-   - Endpoint para fornecer uma playlist de vídeos.
-   - Controle da ordem dos vídeos no backend.
-
-3. **Banco de Dados**:
-   - Introduzir um banco de dados SQL (PostgreSQL) para armazenar:
-     - URLs dos vídeos.
-     - Informações adicionais (nome, descrição, duração, etc.).
-
-4. **DevOps**:
-   - Configurar pipeline básico de CI/CD com **GitHub Actions**:
-     - Deploy automático para o frontend e backend.
-
-### Tecnologias:
-- **Banco de Dados**: PostgreSQL (TypeORM ou Prisma para integração).
-- **Infraestrutura**: Docker para isolar os serviços.
+3. **Banco de Dados e Persistência de Dados (Inicial)**:
+   - Escolher entre **PostgreSQL** ou **MongoDB** (conforme necessidade).
+   - Configurar a conexão com o banco de dados, mas ainda sem funcionalidades completas de metadados de vídeos.
+   
+### Entrega:
+- Frontend básico configurado com Next.js.
+- Backend básico configurado com NestJS e endpoint de teste.
+- Banco de dados configurado.
 
 ---
 
-## **Fase 3: Streaming com HLS**
+## Fase 2: Funcionalidade de Reprodução e Transcodificação de Vídeos
+
 ### Objetivo:
-Melhorar a entrega de vídeos, implementando streaming via HLS.
+Adicionar a reprodução contínua de vídeos, começando com uma lista de vídeos fixa, e integrar a transcodificação para streaming.
 
-### Melhorias:
-1. **Frontend**:
-   - Substituir React Player por **HLS.js** para suportar streaming contínuo.
+### Tarefas:
+1. **Implementação da Reprodução de Vídeos no Frontend**:
+   - Integrar o player (React Player ou HLS.js) para carregar e reproduzir vídeos.
+   - Configurar uma tela inicial para exibir o vídeo atual.
+   - Implementar a funcionalidade de lista/playlist básica, onde os vídeos são reproduzidos em sequência.
 
-2. **Backend**:
-   - Usar **FFmpeg** para transcodificar vídeos para HLS.
-   - Gerar segmentos (.m3u8 e .ts) armazenados em um bucket (AWS S3 ou GCP Storage).
-   - Atualizar o backend para fornecer links de streaming HLS.
+2. **Integração de Backend - API para Vídeos**:
+   - Criar endpoints para fornecer o vídeo atual (ex.: URL do vídeo, título).
+   - Implementar funcionalidade de playlist para gerenciar a ordem de reprodução dos vídeos.
 
-3. **DevOps**:
-   - Adicionar suporte à CDN (AWS CloudFront) para acelerar a entrega dos vídeos.
+3. **Transcodificação com FFmpeg**:
+   - Configurar **FFmpeg** no backend para preparar os vídeos para streaming (convertendo para formato HLS, por exemplo).
+   - Criar scripts de transcodificação no backend para vídeos enviados.
 
-### Tecnologias:
-- **Streaming**: FFmpeg para transcodificação + AWS S3 + CloudFront.
-- **Frontend**: HLS.js no Next.js.
+4. **Hospedagem Inicial de Vídeos**:
+   - Armazenar vídeos em um serviço como **AWS S3** ou **Google Cloud Storage**.
+   - Configurar a entrega de vídeos via CDN (**CloudFront** ou outro serviço).
+
+### Entrega:
+- Funcionalidade de reprodução de vídeos simples implementada.
+- API que fornece o vídeo atual e a lista de vídeos configurada.
+- Videos preparados para streaming com transcodificação.
 
 ---
 
-## **Fase 4: Sistema de Gerenciamento de Vídeos**
+## Fase 3: Melhoria da Interface e Funcionalidades Avançadas
+
 ### Objetivo:
-Implementar funcionalidades de administração para gerenciar vídeos.
+Melhorar a interface de usuário e adicionar funcionalidades avançadas para o controle de playlists, autenticação e gerenciamento de vídeos.
 
-### Melhorias:
-1. **Frontend**:
-   - Criar uma página administrativa para:
-     - Fazer upload de novos vídeos.
-     - Gerenciar playlists (adicionar, remover, reorganizar).
+### Tarefas:
+1. **Melhoria da Interface no Frontend**:
+   - Adicionar controles de reprodução (play, pause, skip).
+   - Implementar interface para visualização da playlist.
+   - Melhorar a experiência do usuário com um design mais polido (utilizar CSS frameworks como **Tailwind CSS** ou **Material UI**).
+   
+2. **Gerenciamento de Playlists no Backend**:
+   - Implementar endpoints REST ou GraphQL para manipulação da playlist (adicionar, remover ou reorganizar vídeos).
+   - Criar lógica para o backend gerenciar a ordem dos vídeos na playlist.
 
-2. **Backend**:
-   - Endpoint para upload de vídeos e atualização de playlists.
-   - Integração com armazenamento em nuvem (AWS S3).
+3. **Autenticação de Usuário**:
+   - Implementar autenticação via **JWT** ou **OAuth** no backend (login, registro).
+   - Adicionar a lógica de controle de acesso para funções sensíveis (como upload de vídeos ou manipulação de playlists).
 
-3. **Banco de Dados**:
-   - Expandir o modelo de dados para incluir:
-     - Data de upload.
-     - Estatísticas de reprodução (opcional).
-
-### Tecnologias:
-- **Administração**: Dashboard simples em Next.js.
-- **Armazenamento**: Integração com AWS S3 para uploads.
+4. **Aprimoramento do Banco de Dados**:
+   - Definir modelos para vídeos e playlists (com **TypeORM** ou **Prisma** no backend).
+   - Implementar o armazenamento de metadados (título, descrição, URL do vídeo, etc.).
+   
+### Entrega:
+- Interface de usuário aprimorada.
+- Funcionalidade de controle de playlist e autenticação implementada.
+- Banco de dados com estrutura mais robusta de vídeos e playlists.
 
 ---
 
-## **Fase 5: Escalabilidade e Monitoramento**
+## Fase 4: Otimização, Escalabilidade e DevOps
+
 ### Objetivo:
-Preparar o sistema para escala e monitorar o desempenho.
+Implementar as práticas de DevOps, automação de deploy, monitoramento e escalabilidade da infraestrutura.
 
-### Melhorias:
-1. **Frontend**:
-   - Melhorar o SEO com Server-Side Rendering (SSR).
-   - Implementar cache para dados que não mudam com frequência.
+### Tarefas:
+1. **Infraestrutura como Código (IaC)**:
+   - Configurar **Terraform** ou **AWS CloudFormation** para provisionamento de infraestrutura (S3, CDN, EC2, etc.).
+   
+2. **Automação de Deploy (CI/CD)**:
+   - Configurar **GitHub Actions**, **GitLab CI/CD**, ou **Jenkins** para automação do deploy tanto do frontend quanto do backend.
 
-2. **Backend**:
-   - Implementar caching com **Redis** para playlists.
-   - Melhorar segurança com autenticação JWT ou OAuth.
+3. **Monitoramento e Logs**:
+   - Integrar ferramentas de monitoramento como **Prometheus** e **Grafana**.
+   - Implementar **Elastic Stack (ELK)** ou **Datadog** para logs centralizados e análise de métricas.
 
-3. **DevOps**:
-   - Orquestração com **Kubernetes** para escalabilidade.
-   - Monitoramento com **Prometheus** e visualização com **Grafana**.
-   - Logs centralizados com **Elastic Stack (ELK)**.
+4. **Contêineres e Orquestração**:
+   - Dockerizar o frontend e o backend.
+   - Configurar **Kubernetes** para orquestração e escalabilidade automática.
+   
+5. **Otimização de Performance**:
+   - Implementar cache de vídeos ou metadados com **Redis**.
+   - Revisar performance da aplicação, garantindo que o sistema possa escalar de acordo com a demanda de usuários.
 
-4. **Banco de Dados**:
-   - Otimizar consultas com índices e replicação.
-
-### Tecnologias:
-- **Caching**: Redis.
-- **Monitoramento**: Prometheus + Grafana.
-- **Orquestração**: Kubernetes.
+### Entrega:
+- Infraestrutura provisionada e configurada via IaC.
+- Pipeline de CI/CD configurado.
+- Monitoramento e logs implementados.
+- Sistema escalável usando Docker e Kubernetes.
 
 ---
 
-## **Fase 6: Funcionalidades Avançadas**
+## Fase 5: Finalização e Refinamento
+
 ### Objetivo:
-Adicionar recursos premium ao sistema.
+Finalizar o projeto, realizar testes completos, corrigir bugs e preparar a documentação.
 
-### Melhorias:
-1. **Frontend**:
-   - Implementar autenticação para conteúdo restrito.
-   - Suporte a múltiplos canais (exemplo: playlists temáticas).
+### Tarefas:
+1. **Testes**:
+   - Implementar testes unitários e de integração (utilizando **Jest**, **Supertest**, etc.).
+   - Realizar testes de carga e desempenho para garantir que o sistema possa suportar um número elevado de acessos.
 
-2. **Backend**:
-   - Análises detalhadas: monitorar quantos usuários assistiram cada vídeo.
-   - WebSockets para eventos em tempo real (exemplo: notificações).
+2. **Refinamento e Ajustes Finais**:
+   - Ajustar a UI/UX com base no feedback.
+   - Corrigir qualquer bug ou inconsistência.
 
-3. **DevOps**:
-   - Automação completa com **Terraform** para IaC.
-   - Backup automático do banco de dados e arquivos.
+3. **Documentação**:
+   - Atualizar o README com detalhes completos sobre como rodar o projeto.
+   - Adicionar diagramas de arquitetura e fluxos de dados.
+
+### Entrega:
+- Sistema finalizado, com testes completos.
+- Documentação finalizada e pronta para produção.
 
 ---
 
-Cada fase constrói sobre a anterior, permitindo que você comece com algo simples e aumente a complexidade conforme necessário. Se precisar de ajuda para implementar qualquer fase, é só pedir! 😊
+## Resumo das Fases de Entrega
+
+| Fase              | Descrição                                                       |
+|-------------------|-----------------------------------------------------------------|
+| **Fase 1**        | Projeto básico e configuração inicial.                         |
+| **Fase 2**        | Funcionalidade de reprodução de vídeos e transcodificação.      |
+| **Fase 3**        | Melhoria da interface e funcionalidades avançadas.             |
+| **Fase 4**        | DevOps, escalabilidade e monitoramento.                         |
+| **Fase 5**        | Testes, refinamento e documentação final.                      |
